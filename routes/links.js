@@ -1,4 +1,5 @@
-const router = require('express').Router({mergeParams: true})
+const { Router } = require('express')
+const router = Router({ mergeParams: true })
 const { db } = require('../data/database')
 
 const Link = require('../models/link')
@@ -21,10 +22,10 @@ function sendLinkIdNotFound(res) {
 
 function getUser(user_id, values, callback) {
     db.get(`SELECT ${values.join(',')} FROM user WHERE id = ?`, [user_id], (err, row) => {
-      if (err) throw err
-      callback(row)
+        if (err) throw err
+        callback(row)
     })
-  }
+}
 
 // GET '/users/:userId/links'
 router.get('/', (req, res) => {
@@ -41,14 +42,14 @@ router.get('/', (req, res) => {
             return
         }
         db.all(`
-      SELECT link.id as id_link, link.tags, link.url FROM link
-      INNER JOIN user ON user.id = link.user_id
-      WHERE link.user_id = ?
-    `, [userId], (err, links) => {
-                if (err) throw err
+            SELECT link.id as id_link, link.tags, link.url FROM link
+            INNER JOIN user ON user.id = link.user_id
+            WHERE link.user_id = ?
+        `, [userId], (err, links) => {
+            if (err) throw err
 
-                res.json({ "status": "success", "links": links || [] })
-            })
+            res.json({ "status": "success", "links": links || [] })
+        })
     })
 })
 
@@ -188,7 +189,6 @@ router.delete('/:linkId', (req, res) => {
             sendUserNotExists(res)
             return
         }
-
         getLink(userId, linkId, ['link'], link => {
             if (!link) {
                 sendLinkNotExists(res)

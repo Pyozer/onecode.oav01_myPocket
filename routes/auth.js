@@ -29,8 +29,9 @@ registerRouter.post('/', (req, res) => {
                 res.json({ "status": "error", "error": "User exists request", "message": "This nickname is already taken by another user !" })
         } else {
             bcrypt.hash(user.password, saltRounds, (err, hash) => {
-                user.password = hash
+                if (err) throw err
 
+                user.password = hash
                 db.run(
                     "INSERT INTO user(nickname, password, email) VALUES ($nickname, $password, $email)",
                     user.toJSONDB(),
@@ -93,7 +94,6 @@ logoutRouter.get('/', (req, res) => {
     req.session.destroy()
     res.json({ "status": "success", "message": "Login successfull", "redirect": "/login" })
 })
-
 
 module.exports = {
     registerRouter,

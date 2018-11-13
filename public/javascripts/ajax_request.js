@@ -26,7 +26,6 @@ function ajaxFromRequest(url, formId, resultIdDiv) {
                 }, 500)
         }
     }
-
     xmlhttp.open("POST", url, true)
     xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
 

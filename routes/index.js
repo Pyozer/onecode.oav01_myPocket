@@ -1,12 +1,11 @@
-const express = require('express')
-const router = express.Router()
+const { Router } = require('express')
+const router = Router()
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  if (!req.session.user)
+// GET '/'
+router.get('/', (req, res) => {
+  if (!req.session.user) {
     res.redirect('/login')
-  else {
-    console.log(req.session)
+  } else {
     res.render('index', { title: 'Home', user: req.session.user })
   }
 })

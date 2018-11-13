@@ -35,8 +35,9 @@ usersRouter.post('/', (req, res) => {
   }
 
   bcrypt.hash(user.password, saltRounds, (err, hash) => {
-    user.password = hash
+    if (err) throw err
 
+    user.password = hash
     db.run(
       "INSERT INTO user(nickname, password, email) VALUES ($nickname, $password, $email)",
       user.toJSONDB(),
@@ -106,12 +107,10 @@ usersRouter.patch('/:userId', (req, res) => {
       if (!isPasswordCorrect) {
         res.status(401).json({ "status": "error", "error": "Unauthorized", "message": "The actual password is not correct !" })
         return
-      } else {
-        // Actual password correct, so we can update it
-        user.password = bcrypt.hashSync(user.password, saltRounds)
       }
+      // Actual password correct, so we can update it
+      user.password = bcrypt.hashSync(user.password, saltRounds)
     }
-
     const reqParts = user.toJSON().map(e => `${e.key} = ${e.value ? '$' : ''}${e.key}`)
     const reqUpdate = `UPDATE user SET ${reqParts.join(', ')} WHERE id = $id`
 
@@ -146,6 +145,7 @@ usersRouter.delete('/:userId', (req, res) => {
   })
 })
 
+// Add nested routes (/users/:userId/links and /users/:userId/links/:linkId)
 usersRouter.use('/:userId/links', linksRouter)
 
 module.exports = usersRouter
