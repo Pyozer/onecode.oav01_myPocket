@@ -1,8 +1,6 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+form .input {
+    max-width: 350px;
 }
-
-a {
-  color: #00B7FF;
+h1.title, #result {
+    margin-bottom: 50px!important;
 }

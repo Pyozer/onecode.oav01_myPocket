@@ -1,0 +1,36 @@
+<% include ./partials/header %>
+<section class="hero is-fullheight is-dark">
+    <div class="hero-body columns">
+        <div class="column has-text-centered is-4 is-offset-4">
+            <h1 class="title is-2">Register</h1>
+
+            <div id="result"></div>
+
+            <form id="registerFrom" onsubmit="event.preventDefault(); ajaxFromRequest('/register', 'registerFrom', 'result');">
+                <div class="field">
+                    <div class="control has-text-centered">
+                        <input class="input is-rounded" type="email" name="email" placeholder="Email" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control has-text-centered">
+                        <input class="input is-rounded" type="password" name="password" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control has-text-centered">
+                        <input class="input is-rounded" type="text" name="nickname" placeholder="Nickname" />
+                    </div>
+                </div>
+                <br />
+                <div class="control has-text-centered">
+                    <input type="submit" class="button is-primary is-rounded" value="Submit" />
+                </div>
+            </form>
+            <br />
+            <span>You already have an account ? </span>
+            <a href="/login" type="button"><u>Login</u></a>
+        </div>
+    </div>
+</section>
+<% include ./partials/footer %>

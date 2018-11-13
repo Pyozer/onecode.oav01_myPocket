@@ -1,0 +1,31 @@
+<% include ./partials/header %>
+<section class="hero is-fullheight is-dark">
+    <div class="hero-body columns">
+        <div class="column has-text-centered is-4 is-offset-4">
+            <h1 class="title is-2">Login</h1>
+
+            <div id="result"></div>
+
+            <form id="loginFrom" onsubmit="event.preventDefault(); ajaxFromRequest('/login', 'loginFrom', 'result');">
+                <div class="field">
+                    <div class="control has-text-centered">
+                        <input class="input is-rounded" type="text" name="email" id="email" placeholder="Email" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control has-text-centered">
+                        <input class="input is-rounded" type="password" name="password" id="password" placeholder="Password" />
+                    </div>
+                </div>
+                <br />
+                <div class="control has-text-centered">
+                    <input type="submit" class="button is-primary is-rounded" value="Submit" />
+                </div>
+            </form>
+            <br />
+            <span>Do don't have an account ? </span>
+            <a href="/register" type="button"><u>Register</u></a>
+        </div>
+    </div>
+</section>
+<% include ./partials/footer %>

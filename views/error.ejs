@@ -1,3 +1,15 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<% include ./partials/header %>
+<section class="hero is-fullheight is-dark">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title is-2">
+                <%= err.status %>
+                <%= err.message %>
+            </h1>
+
+            <a href="/login" type="button" class="button is-rounded" style="margin-right: 20px">Login</a>
+            <a href="/register" type="button" class="button is-rounded">Register</a>
+        </div>
+    </div>
+</section>
+<% include ./partials/footer %>
