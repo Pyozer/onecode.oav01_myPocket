@@ -6,7 +6,7 @@ module.exports = class User {
         this.email = email
     }
 
-    isValidForInsert() {
+    isValid() {
         return this.nickname && this.password && this.email
     }
 

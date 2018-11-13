@@ -6,7 +6,7 @@ module.exports = class Link {
         this.user_id = user_id
     }
 
-    isValidForInsert() {
+    isValid() {
         return this.tags && this.url && this.user_id
     }
 
