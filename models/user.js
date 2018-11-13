@@ -10,24 +10,22 @@ module.exports = class User {
         return this.nickname && this.password && this.email
     }
 
-    toMap() {
+    toJSON() {
         return [
             { key: "id", value: this.id },
             { key: "nickname", value: this.nickname },
-            { key: "email", value: this.email },
             { key: "password", value: this.password },
+            { key: "email", value: this.email },
         ].filter(item => item.value)
     }
 
-    toMapWithoutId() {
-        return this.toMap().filter(item => item.key != "id")
-    }
+    toJSONDB() {
+        let obj = {}
+        if (this.id) obj['$id'] = this.id
+        if (this.nickname) obj['$nickname'] = this.nickname
+        if (this.password) obj['$password'] = this.password
+        if (this.email) obj['$email'] = this.email
 
-    values() {
-        return this.toMap().map(item => item.value)
-    }
-
-    valuesWithoutId() {
-        return this.toMapWithoutId().map(item => item.value)
+        return obj
     }
 }

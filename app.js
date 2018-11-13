@@ -2,19 +2,10 @@ const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
 const logger = require('morgan')
-const db = require('./data/database')
+const { db, dbInitialize } = require('./data/database')
 
 // Init database table
-db.serialize(_ => {
-  db.run(
-    `CREATE TABLE IF NOT EXISTS user (
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      nickname VARCHAR(255),
-      password VARCHAR(255),
-      email VARCHAR(320)
-    )
-  `)
-})
+dbInitialize()
 
 // Routes index
 const indexRouter = require('./routes/index')
