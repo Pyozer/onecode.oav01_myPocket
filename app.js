@@ -26,10 +26,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session(
-  {
-    secret: 'VerySecureKey',
-    cookie: { maxAge: 60000 }
-  }
+  { secret: 'VerySecureKey', cookie: { maxAge: 60000 }}
 ))
 
 // Global routes
