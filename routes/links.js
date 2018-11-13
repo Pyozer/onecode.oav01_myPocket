@@ -70,7 +70,7 @@ router.post('/', (req, res) => {
 
         if (!link.isValid()) {
             res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must enter the tags and url" })
-            return;
+            return
         }
 
         db.run(
@@ -198,7 +198,7 @@ router.delete('/:linkId', (req, res) => {
                 if (err) throw err
 
                 res.json({ "status": "success", "message": "Link has been successfully deleted !" })
-            });
+            })
         })
     })
 })

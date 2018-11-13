@@ -34,3 +34,20 @@ function ajaxFromRequest(url, formId, resultIdDiv) {
     const postData = Array.from(new FormData(form), e => e.map(encodeURIComponent).join('=')).join('&')
     xmlhttp.send(postData)
 }
+
+function logout() {
+    const xmlhttp = new XMLHttpRequest()
+    xmlhttp.onreadystatechange = () => {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+            const data = JSON.parse(xmlhttp.responseText)
+
+            if (data.redirect)
+                setTimeout(() => {
+                    window.location.replace(data.redirect);
+                }, 500)
+        }
+    }
+
+    xmlhttp.open("GET", '/logout')
+    xmlhttp.send()
+}

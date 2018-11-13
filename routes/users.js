@@ -4,8 +4,8 @@ const usersRouter = Router()
 const { db } = require('../data/database')
 const linksRouter = require('./links')
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
 const User = require('../models/user')
 
@@ -31,7 +31,7 @@ usersRouter.post('/', (req, res) => {
 
   if (!user.isValid()) {
     res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must enter a nickname, password and your email !" })
-    return;
+    return
   }
 
   bcrypt.hash(user.password, saltRounds, (err, hash) => {
@@ -54,7 +54,7 @@ usersRouter.get('/:userId', (req, res) => {
 
   if (!userId) {
     sendUserIdNotFound(res)
-    return;
+    return
   }
 
   getUser(userId, ['id', 'nickname', 'email'], user => {
@@ -87,12 +87,12 @@ usersRouter.patch('/:userId', (req, res) => {
   // Check body for new data
   if (!user.nickname && !user.email && !user.password) {
     res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to enter at least a new nickname, email or password" })
-    return;
+    return
   }
   // Check if actual password is specify
   if (user.password && !req.body.actual_password) {
     res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must enter your actual password" })
-    return;
+    return
   }
 
   // Check if actual password is correct
@@ -105,7 +105,7 @@ usersRouter.patch('/:userId', (req, res) => {
       const isPasswordCorrect = bcrypt.compareSync(req.body.actual_password, userRow.password)
       if (!isPasswordCorrect) {
         res.status(401).json({ "status": "error", "error": "Unauthorized", "message": "The actual password is not correct !" })
-        return;
+        return
       } else {
         // Actual password correct, so we can update it
         user.password = bcrypt.hashSync(user.password, saltRounds)
@@ -142,7 +142,7 @@ usersRouter.delete('/:userId', (req, res) => {
     db.run("DELETE FROM user WHERE id = ?", [userId], err => {
       if (err) throw err
       res.json({ "status": "success", "message": "User successfully deleted !" })
-    });
+    })
   })
 })
 
