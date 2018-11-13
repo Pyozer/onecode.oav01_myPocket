@@ -10,11 +10,11 @@ const saltRounds = 10;
 const User = require('../models/user')
 
 function sendUserNotExists(res) {
-    res.status(404).json({ "status": "error", "error": "Not found", "message": "User is not exists !" })
+    res.status(404).json({ "status": "error", "error": "Not found", "message": "User not exists !" })
 }
 
 function sendUserIdNotFound(res) {
-    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must pass a valid userId (int) in params !" })
+    res.status(400).json({ "status": "error", "error": "Bad request", "message": "Error when try to get user_id from url" })
 }
 
 // GET '/users'
@@ -30,7 +30,7 @@ usersRouter.post('/', (req, res) => {
   const user = new User(null, req.body.nickname, req.body.password, req.body.email)
 
   if (!user.isValid()) {
-    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to pass 'nickname', 'password' and 'email' in post body" })
+    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must enter a nickname, password and your email !" })
     return;
   }
 
@@ -42,7 +42,7 @@ usersRouter.post('/', (req, res) => {
       user.toJSONDB(),
       err => {
         if (err) throw err
-        res.json({ "status": "success", "message": "User has been successfully added !" })
+        res.json({ "status": "success", "message": "User successfully added !" })
       }
     )
   })
@@ -86,12 +86,12 @@ usersRouter.patch('/:userId', (req, res) => {
 
   // Check body for new data
   if (!user.nickname && !user.email && !user.password) {
-    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to pass at least 'nickname', 'email' or 'new_password' in body" })
+    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to enter at least a new nickname, email or password" })
     return;
   }
   // Check if actual password is specify
   if (user.password && !req.body.actual_password) {
-    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must pass 'actual_password' in body" })
+    res.status(400).json({ "status": "error", "error": "Bad request", "message": "You must enter your actual password" })
     return;
   }
 
@@ -120,7 +120,7 @@ usersRouter.patch('/:userId', (req, res) => {
       user.toJSONDB(),
       err => {
         if (err) throw err
-        res.json({ "status": "success", "message": "User data has been successfully updated !" })
+        res.json({ "status": "success", "message": "Your data has been successfully updated !" })
       }
     )
   })
@@ -141,7 +141,7 @@ usersRouter.delete('/:userId', (req, res) => {
     }
     db.run("DELETE FROM user WHERE id = ?", [userId], err => {
       if (err) throw err
-      res.json({ "status": "success", "message": "User has been successfully deleted !" })
+      res.json({ "status": "success", "message": "User successfully deleted !" })
     });
   })
 })

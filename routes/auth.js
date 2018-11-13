@@ -19,7 +19,7 @@ registerRouter.post('/', (req, res) => {
     const user = new User(null, req.body.nickname, req.body.password, req.body.email)
 
     if (!user.isValid()) {
-        res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to pass 'nickname', 'password' and 'email' in post body" })
+        res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to enter your nickname, password and email" })
         return;
     }
 
@@ -41,7 +41,7 @@ registerRouter.post('/', (req, res) => {
                     err => {
                         if (err) throw err
                         req.session.isLogged = true;
-                        res.json({ "status": "success", "message": "User has been successfully added !", "redirect": "/" })
+                        res.json({ "status": "success", "message": "Your account has been successfully created !", "redirect": "/" })
                     }
                 )
             })
@@ -61,7 +61,7 @@ loginRouter.post('/', (req, res) => {
     const password = req.body.password
 
     if (!email || !password) {
-        res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to pass 'email' and 'password' in post body" })
+        res.status(400).json({ "status": "error", "error": "Bad request", "message": "You need to enter your email and password" })
         return;
     }
 
@@ -73,7 +73,7 @@ loginRouter.post('/', (req, res) => {
         } else {
             const isPwdMatch = bcrypt.compareSync(password, userRow.password)
             if (!isPwdMatch) {
-                res.status(401).json({ "status": "error", "error": "Credential fail", "message": "Email or password are incorrect !" })
+                res.status(401).json({ "status": "error", "error": "Credential fail", "message": "Email or password incorrect !" })
                 return;
             }
             req.session.isLogged = true;
